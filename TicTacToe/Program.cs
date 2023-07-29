@@ -41,5 +41,39 @@ namespace TicTacToe
                 Console.WriteLine("-------------"); // Dibujar lineas horizontales
             }
         }
+
+        // Pregunta donde escribir y lo dibuja en el tablero
+        static void PreguntarPosicion(int jugador) //1= Jugador1; 2=Jugador2
+        {
+            int fila, columna;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Turno del jugador: {0}", jugador);
+                //Pedimos el numero de fila
+                do
+                {
+                    Console.WriteLine("Selecciona la fila (1 a 3): ");
+                    fila = Convert.ToInt32(Console.ReadLine());
+
+                } while ((fila < 1) || (fila > 3)); // Ejecutar mientras fila sea menor que 1 o mayor que 3
+
+                // Pedimos le numero de columnas
+                do
+                {
+                    Console.WriteLine("Selecciona la columna (1 a 3): ");
+                    columna = Convert.ToInt32(Console.ReadLine());
+
+                } while ((fila < 1) || (fila > 3));
+
+                if (tablero[fila - 1, columna - 1] != 0)
+                    Console.WriteLine("Casilla ocupada!");
+
+
+            } while (tablero[fila - 1, columna - 1] != 0);
+
+            // Si todo es correcto, se le asigna al jugador correspondiente
+            tablero[fila - 1, columna - 1] = jugador;
+        }
     }
 }
