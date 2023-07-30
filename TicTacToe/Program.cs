@@ -14,10 +14,54 @@ namespace TicTacToe
         static char[] simbolo = { ' ', 'O', 'X' };
         static void Main(string[] args)
         {
+            bool terminado = false;
 
             // Dibujar el tablero inicial 
             DibujarTablero();
             Console.WriteLine("Jugador 1 = O\nJugador 2 = X");
+
+            do /* Usamos un ciclo do-while porque desconocemos el numero de veces quye se tiene que llevar a cabo*/
+            {
+                // Turno Jugador 1
+                PreguntarPosicion(1); //Envia el valor de  1 a la funcion preguntarposicion
+
+                // Dibujar la casilla del jugador 1
+                DibujarTablero();
+
+                // Comprobar si ha ganado la partida el jugador 1
+                terminado = ComprobarGanador();
+
+                if(terminado == true)
+                {
+                    Console.WriteLine("¡El jugador 1 ha ganado!");
+                }
+                else // De lo contrario comprobamos si hubo un empate
+                {
+                    terminado = ComprobarEmpate();
+                    if(terminado == true)
+                    {
+                        Console.WriteLine("¡Esto es un empate!");
+                    }
+
+                    // Si jugador 1 no gano, ni hubo empate, entonces es turno del jugador 2
+                    else
+                    {
+                        // Turno del jugador 2
+                        PreguntarPosicion(2);
+                        // Dibujar la casilla del jugador 2
+                        DibujarTablero();
+                        // Comprobar si ha ganado la partida el jugador 2
+                        terminado= ComprobarGanador();
+
+                        if (terminado == true)
+                        {
+                            Console.WriteLine("¡El jugador 2 ha ganado!");
+                        }
+                    }
+                }
+
+              // Repetir hasta 3 en linea o empate (tablero lleno)
+            } while (terminado == false);/*Mientras el juego no haya terminado, es decir, mientras la variable sea igual afalse, se seguira                                repitiendo el ciclo*/
 
         }//Cierre de Main
 
@@ -120,6 +164,32 @@ namespace TicTacToe
             }
 
             return ticTacToe;
+        }
+
+        // Devuelve true si hay empate
+        static bool ComprobarEmpate()
+        {
+            bool hayEspacio = false;
+            int fila = 0;
+            int columna = 0;
+
+            for(fila = 0; fila <3; fila ++)
+            {
+                for(columna = 0; columna < 3; columna ++) 
+                {
+                    if (tablero[fila, columna] == 0)
+                    {
+                        if (tablero[fila,columna] == 0)/*Si encuentra una sola casilla vacia, quiere decir que se puede seguir jugando*/
+
+                        {
+                            hayEspacio = true;
+                        }
+                        
+                    }
+                }
+            }
+
+            return !hayEspacio; /*Si el ciclo anterior nos regresa un true, indicandonos que si hay espacios, entonces tiene que regresar una                     negacion de true para que la condicion de empate no se cumpla en la funcion de main()*/
         }
     }
 }
